@@ -1,0 +1,24 @@
+---
+/**
+ * Cloudflare Turnstile Widget
+ * Bot protection CAPTCHA alternative
+ *
+ * Usage:
+ * 1. Create widget at https://dash.cloudflare.com/?to=/:account/turnstile
+ * 2. Add all hostnames (yourdomain.com, localhost)
+ * 3. Set PUBLIC_TURNSTILE_SITE_KEY in wrangler.jsonc vars
+ * 4. Set TURNSTILE_SECRET_KEY as wrangler secret
+ */
+
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const siteKey = PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAAlVu4wHbFr5Mffl'; // Test key fallback
+---
+
+<div class={`cf-turnstile ${className}`} data-sitekey={siteKey} data-theme="light"></div>
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

@@ -1,0 +1,53 @@
+---
+/**
+ * Plausible Analytics Component
+ *
+ * Supports both Plausible Cloud and self-hosted instances.
+ * Uses the October 2025 script pattern with unique script IDs per site.
+ *
+ * IMPORTANT: For self-hosted Plausible with the new script (Oct 2025),
+ * you MUST set the `endpoint` option in plausible.init() - the old
+ * data-api attribute is no longer supported.
+ *
+ * @see https://plausible.io/docs/script-update-guide
+ *
+ * Usage:
+ * 1. Get script ID from your Plausible dashboard (Settings > Tracking Code)
+ * 2. Pass scriptId and host as props
+ *
+ * Examples:
+ * - Plausible Cloud: <PlausibleAnalytics scriptId="pa-xxx" />
+ * - Self-hosted: <PlausibleAnalytics scriptId="pa-xxx" host="https://analytics.yourdomain.com" />
+ */
+
+interface Props {
+  scriptId?: string;
+  host?: string; // Plausible host URL (default: Plausible Cloud)
+}
+
+const {
+  scriptId = '',
+  host = 'https://plausible.io' // Default to Plausible Cloud
+} = Astro.props;
+
+const scriptUrl = scriptId ? `${host}/js/${scriptId}.js` : '';
+const apiEndpoint = `${host}/api/event`;
+---
+
+{scriptId && (
+  <>
+    <script is:inline define:vars={{ scriptUrl }}>
+      // Dynamically load the Plausible script
+      const s = document.createElement('script');
+      s.src = scriptUrl;
+      s.async = true;
+      document.head.appendChild(s);
+    </script>
+    <script is:inline define:vars={{ apiEndpoint }}>
+      // Initialize Plausible with endpoint (required for Oct 2025+ script)
+      window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) };
+      plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+      plausible.init({ endpoint: apiEndpoint });
+    </script>
+  </>
+)}
