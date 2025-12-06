@@ -11,6 +11,7 @@ interface CloudflareRuntime {
   ctx: ExecutionContext;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare namespace App {
   interface Locals {
     runtime: CloudflareRuntime;

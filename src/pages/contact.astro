@@ -2,9 +2,9 @@
 /**
  * Contact Page - Form with Turnstile and Resend
  */
-import Base from '../layouts/Base.astro';
+
 import TurnstileWidget from '../components/TurnstileWidget.astro';
-import { actions } from 'astro:actions';
+import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Contact | My Website" description="Get in touch with us">
@@ -46,8 +46,7 @@ import { actions } from 'astro:actions';
           minlength="10"
           rows="4"
           class="w-full rounded-lg border px-4 py-2 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
-          placeholder="Your message..."
-        ></textarea>
+          placeholder="Your message..."></textarea>
       </div>
 
       <TurnstileWidget class="flex justify-center" />

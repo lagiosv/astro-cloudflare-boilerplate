@@ -18,12 +18,14 @@ Most Astro starters deploy to Netlify or Vercel. This one is built specifically 
 ## Features
 
 ### Core Stack
+
 - 🚀 **Astro 5** with SSR and type-safe environment variables
 - ☁️ **Cloudflare Workers** (NOT Pages) — edge deployment with global CDN
 - 🎨 **Tailwind CSS v4** with typography plugin and dark mode
 - 📝 **TypeScript** with strict mode
 
 ### Developer Experience
+
 - ✏️ **ESLint** compatible with `.astro` files
 - 🛠️ **Prettier** compatible with `.astro` files
 - 🧹 **Auto-remove unused imports**
@@ -31,6 +33,7 @@ Most Astro starters deploy to Netlify or Vercel. This one is built specifically 
 - 🔄 **GitHub Actions** for CI/CD
 
 ### Production Ready
+
 - 🐛 **Sentry** error tracking (client + server with two-SDK pattern)
 - 📊 **Plausible Analytics** (privacy-friendly, works with Cloud or self-hosted)
 - 🤖 **Turnstile** bot protection for forms
@@ -65,20 +68,21 @@ Open [http://localhost:4321](http://localhost:4321) to see your site.
 
 ## Commands
 
-| Command | Action |
-|:--------|:-------|
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build for production to `./dist/` |
-| `npm run preview` | Preview build locally with Wrangler |
-| `npm run deploy` | Build and deploy to Cloudflare Workers |
-| `npm run check` | Run Astro, ESLint, and Prettier checks |
-| `npm run fix` | Auto-fix ESLint and Prettier issues |
+| Command           | Action                                 |
+| :---------------- | :------------------------------------- |
+| `npm run dev`     | Start dev server at `localhost:4321`   |
+| `npm run build`   | Build for production to `./dist/`      |
+| `npm run preview` | Preview build locally with Wrangler    |
+| `npm run deploy`  | Build and deploy to Cloudflare Workers |
+| `npm run check`   | Run Astro, ESLint, and Prettier checks |
+| `npm run fix`     | Auto-fix ESLint and Prettier issues    |
 
 ## Configuration
 
 ### Environment Variables
 
 **Local Development** (`.dev.vars`):
+
 ```bash
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA  # Test key
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
@@ -88,15 +92,15 @@ SENTRY_DSN=https://xxx@sentry.io/xxx
 
 **Production** (Cloudflare Dashboard → Workers → Settings):
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| `PUBLIC_SITE_URL` | Variable | Your site URL |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Variable | Turnstile widget key |
-| `PUBLIC_PLAUSIBLE_SCRIPT_ID` | Variable | Plausible script ID |
-| `TURNSTILE_SECRET_KEY` | Secret | Turnstile verify key |
-| `RESEND_API_KEY` | Secret | Resend API key |
-| `CONTACT_EMAIL` | Secret | Form recipient email |
-| `SENTRY_DSN` | Secret | Sentry DSN |
+| Variable                     | Type     | Description          |
+| ---------------------------- | -------- | -------------------- |
+| `PUBLIC_SITE_URL`            | Variable | Your site URL        |
+| `PUBLIC_TURNSTILE_SITE_KEY`  | Variable | Turnstile widget key |
+| `PUBLIC_PLAUSIBLE_SCRIPT_ID` | Variable | Plausible script ID  |
+| `TURNSTILE_SECRET_KEY`       | Secret   | Turnstile verify key |
+| `RESEND_API_KEY`             | Secret   | Resend API key       |
+| `CONTACT_EMAIL`              | Secret   | Form recipient email |
+| `SENTRY_DSN`                 | Secret   | Sentry DSN           |
 
 ### Deployment
 
@@ -149,6 +153,7 @@ Workers provide better SSR support, more bindings (KV, R2, D1), and are the futu
 ### Why Two Sentry SDKs?
 
 `@sentry/astro` server-side doesn't work on Cloudflare's runtime. This boilerplate uses:
+
 - `@sentry/astro` for client-side (via `sentry.client.config.js`)
 - `@sentry/cloudflare` for server-side (via `src/middleware.ts`)
 

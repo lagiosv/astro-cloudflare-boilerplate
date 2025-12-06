@@ -1,0 +1,6 @@
+dist
+node_modules
+.astro
+worker-configuration.d.ts
+# Contains inline Plausible script that Prettier can't parse
+src/components/PlausibleAnalytics.astro

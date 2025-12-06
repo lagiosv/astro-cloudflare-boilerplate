@@ -15,25 +15,25 @@
   // Static assets configuration
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist",
   },
 
   // Sentry version metadata for release tracking
   "version_metadata": {
-    "binding": "CF_VERSION_METADATA"
+    "binding": "CF_VERSION_METADATA",
   },
 
   // Enable observability (logs, errors)
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
 
   // Environment variables (non-secret, per-environment)
   "vars": {
     // Override these per-environment in Cloudflare dashboard
     "PUBLIC_SITE_NAME": "My Website",
-    "PUBLIC_SITE_URL": "https://example.com"
-  }
+    "PUBLIC_SITE_URL": "https://example.com",
+  },
 
   // OPTIONAL: R2 bucket for media storage
   // Uncomment if using R2:

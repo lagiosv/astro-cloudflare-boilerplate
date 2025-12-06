@@ -5,9 +5,9 @@
  * Integrates with Turnstile for bot protection and Resend for email.
  */
 
-import { defineAction, ActionError } from 'astro:actions';
+import { ActionError, defineAction } from 'astro:actions';
+import { CONTACT_EMAIL, RESEND_API_KEY, TURNSTILE_SECRET_KEY } from 'astro:env/server';
 import { z } from 'astro:schema';
-import { TURNSTILE_SECRET_KEY, RESEND_API_KEY, CONTACT_EMAIL } from 'astro:env/server';
 import { Resend } from 'resend';
 
 // Validate Turnstile token with Cloudflare
@@ -21,7 +21,7 @@ async function verifyTurnstile(token: string): Promise<boolean> {
     }),
   });
 
-  const result = await response.json();
+  const result = (await response.json()) as { success: boolean };
   return result.success === true;
 }
 

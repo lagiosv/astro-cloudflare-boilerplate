@@ -10,9 +10,18 @@
 import * as Sentry from '@sentry/cloudflare';
 import { defineMiddleware } from 'astro:middleware';
 
+// Cloudflare runtime type (injected by @astrojs/cloudflare)
+interface CloudflareRuntime {
+  env: {
+    SENTRY_DSN?: string;
+    CF_VERSION_METADATA?: { id: string };
+  };
+  ctx: ExecutionContext;
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Access Cloudflare runtime environment
-  const runtime = context.locals.runtime;
+  // Access Cloudflare runtime environment (cast needed for type safety)
+  const runtime = (context.locals as { runtime?: CloudflareRuntime }).runtime;
 
   // Skip Sentry if DSN not configured or runtime not available
   if (!runtime?.env?.SENTRY_DSN) {
@@ -34,7 +43,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
         // Environment for filtering
         environment: import.meta.env.MODE || 'production',
       },
-      request: context.request,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      request: context.request as any,
       context: runtime.ctx,
     },
     () => next()

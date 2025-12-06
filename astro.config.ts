@@ -1,12 +1,11 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-import { defineConfig, envField } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
-import icon from 'astro-icon';
 import cloudflare from '@astrojs/cloudflare';
+import sitemap from '@astrojs/sitemap';
 import Sentry from '@sentry/astro';
 import tailwindcss from '@tailwindcss/vite';
+import { defineConfig, envField } from 'astro/config';
+import icon from 'astro-icon';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -68,7 +67,8 @@ export default defineConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss()],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    plugins: [tailwindcss() as any],
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),

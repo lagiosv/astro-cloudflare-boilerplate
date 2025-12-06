@@ -1,11 +1,11 @@
+import js from '@eslint/js';
+import typescriptParser from '@typescript-eslint/parser';
 import astroEslintParser from 'astro-eslint-parser';
 import eslintPluginAstro from 'eslint-plugin-astro';
-import globals from 'globals';
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import typescriptParser from '@typescript-eslint/parser';
-import unusedImports from 'eslint-plugin-unused-imports';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default [
   js.configs.recommended,
@@ -73,6 +73,14 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro', 'worker-configuration.d.ts'],
+    ignores: [
+      'dist',
+      'node_modules',
+      '.github',
+      'types.generated.d.ts',
+      '.astro',
+      'worker-configuration.d.ts',
+      'src/components/PlausibleAnalytics.astro', // Contains Plausible's official inline script
+    ],
   },
 ];
