@@ -1,53 +1,45 @@
 ---
 /**
- * Plausible Analytics Component
+ * Plausible Analytics Component (Oct 2025 Script Format)
  *
- * Supports both Plausible Cloud and self-hosted instances.
- * Uses the October 2025 script pattern with unique script IDs per site.
- *
- * IMPORTANT: For self-hosted Plausible with the new script (Oct 2025),
- * you MUST set the `endpoint` option in plausible.init() - the old
- * data-api attribute is no longer supported.
+ * Uses unique script ID per site with the new pa-xxx format.
+ * For self-hosted instances, endpoint is specified explicitly.
  *
  * @see https://plausible.io/docs/script-update-guide
  *
  * Usage:
- * 1. Get script ID from your Plausible dashboard (Settings > Tracking Code)
- * 2. Pass scriptId and host as props
+ * 1. Get scriptId from Plausible dashboard (Settings > Site Installation)
+ * 2. Pass scriptId and optionally host as props
  *
  * Examples:
- * - Plausible Cloud: <PlausibleAnalytics scriptId="pa-xxx" />
+ * - Plausible Cloud: <PlausibleAnalytics scriptId="pa-xxx" host="https://plausible.io" />
  * - Self-hosted: <PlausibleAnalytics scriptId="pa-xxx" host="https://analytics.yourdomain.com" />
+ *
+ * Note: Script IDs and host URLs should be stored in credentials.env
+ * and referenced via environment variables in production.
  */
 
 interface Props {
-  scriptId?: string;
-  host?: string; // Plausible host URL (default: Plausible Cloud)
+  scriptId: string;
+  host?: string;
 }
 
 const {
-  scriptId = '',
-  host = 'https://plausible.io' // Default to Plausible Cloud
+  scriptId,
+  host = 'https://plausible.io', // Default to Plausible Cloud
 } = Astro.props;
 
-const scriptUrl = scriptId ? `${host}/js/${scriptId}.js` : '';
+// Skip rendering if no scriptId provided
+if (!scriptId) {
+  return;
+}
+
+const scriptUrl = `${host}/js/${scriptId}.js`;
 const apiEndpoint = `${host}/api/event`;
 ---
 
-{scriptId && (
-  <>
-    <script is:inline define:vars={{ scriptUrl }}>
-      // Dynamically load the Plausible script
-      const s = document.createElement('script');
-      s.src = scriptUrl;
-      s.async = true;
-      document.head.appendChild(s);
-    </script>
-    <script is:inline define:vars={{ apiEndpoint }}>
-      // Initialize Plausible with endpoint (required for Oct 2025+ script)
-      window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) };
-      plausible.init = plausible.init || function(i) { plausible.o = i || {} };
-      plausible.init({ endpoint: apiEndpoint });
-    </script>
-  </>
-)}
+<script is:inline async src={scriptUrl}></script>
+<script is:inline define:vars={{ apiEndpoint }}>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init({ endpoint: apiEndpoint });
+</script>
